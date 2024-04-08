@@ -1,6 +1,10 @@
-package pkg
+package nupkg
+
+import "gorm.io/gorm"
 
 type Metadata struct {
+	gorm.Model
+	DatabaseId               uint
 	Id                       int
 	Version                  string
 	Title                    string
@@ -12,6 +16,6 @@ type Metadata struct {
 	RequireLicenseAcceptance bool
 	Description              string
 	ReleaseNotes             string
-	Tags                     []string
-	Dependencies             []Dependency
+	Tags                     []Tag        `gorm:"foreignKey:DatabaseId"`
+	Dependencies             []Dependency `gorm:"foreignKey:DatabaseId"`
 }
