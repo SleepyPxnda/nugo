@@ -4,6 +4,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
+	"server/internal/http/router"
 	"time"
 )
 
@@ -46,7 +47,10 @@ func StartServer() {
 		})
 	*/
 	// Mount the admin sub-router
-	// r.Mount("/admin", adminRouter())
 
-	http.ListenAndServe(":3333", r)
+	r.Route("/api/v2", func(r chi.Router) {
+		r.Mount("/package", router.PackageRouter())
+	})
+
+	http.ListenAndServe(":8080", r)
 }
